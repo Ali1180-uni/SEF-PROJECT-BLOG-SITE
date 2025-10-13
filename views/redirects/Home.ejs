@@ -3,9 +3,12 @@
   <h1>All Blogs</h1>
   <% for(let blogs of blog){ %>
   <div class="Blog-Container">
-        <h1>Topic: <%= blogs.topic %></h1>
-        <h3>Title: <%= blogs.title %></h3>
-        <h4>Blog: <%= blogs.content %></h4>
+    <h1>Topic: <%= blogs.topic %></h1>
+    <h3>Title: <%= blogs.title %></h3>
+    <h4>Blog: <%= blogs.content %></h4>
+    <br>
+    <p>Time: <%= blogs.createdAt.toString().split(" ")[4] %></p>
+    <p>Date: <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %></p>
   </div>
   <% } %>
 </header>
