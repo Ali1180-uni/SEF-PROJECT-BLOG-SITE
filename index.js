@@ -36,13 +36,29 @@ function asyncWrap(fn) {
 }
 
 app.get('/',(req,res)=>{
-    res.redirect('/home');
+    res.redirect('/blogs');
 });
 
-app.get('/home', asyncWrap(async(req,res)=>{
+app.get('/blogs', asyncWrap(async(req,res)=>{
     const blog = await Blog.find();
     res.render('./redirects/Home.ejs', {blog});
 }));
+
+app.get('/blogs/login', asyncWrap(async(req,res)=>{
+   res.render('./redirects/Login.ejs');
+}));
+
+app.get('/blogs/signup', asyncWrap(async(req,res)=>{
+   res.render('./redirects/signUp.ejs');
+}));
+
+app.get('/blogs/new', (req,res)=>{
+    res.render('./redirects/newBlog.ejs');
+});
+
+app.get('/blogs/about', (req,res)=>{
+    res.render('./redirects/About.ejs');
+});
 
 
 app.listen(port, () => {

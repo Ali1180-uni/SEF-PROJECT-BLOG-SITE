@@ -1,0 +1,27 @@
+<% layout('/includes/boilerplate') %>
+<header>
+  <h1>New Blog</h1>
+  <form action="/blogs" class="needs-validation" method="POST" novalidate style="width:100%; max-width:760px;">
+    <div class="mb-3">
+      <label for="topic" class="form-label">Topic</label>
+      <input type="text" class="form-control" id="topic" name="topic" required>
+      <div class="invalid-feedback">Please enter a topic.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" required>
+      <div class="invalid-feedback">Please enter a title.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+      <div class="invalid-feedback">Please enter blog content.</div>
+    </div>
+
+    <button type="submit" class="btn btn-cta">Submit</button>
+  </form>
+
+  <script src="/JS/form-validation.js"></script>
+</header>
