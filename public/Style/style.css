@@ -1,0 +1,64 @@
+
+/* Navbar & Footer Styling */
+.site-font-body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.site-font-heading { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+
+/* NAVBAR */
+.navbar-custom {
+    background: linear-gradient(90deg, #ffffff 0%, #f0f6ff 50%, #ffffff 100%);
+    box-shadow: 0 6px 18px rgba(24, 39, 75, 0.08);
+    backdrop-filter: blur(6px);
+}
+.navbar-custom .container-fluid { align-items: center; }
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #102a43;
+}
+.navbar-brand img { height: 38px; width: auto; }
+.nav-link {
+    color: #334e68 !important;
+    font-weight: 500;
+}
+.nav-link:hover { color: #0a66c2 !important; }
+.btn-cta {
+    background: linear-gradient(90deg,#0a66c2,#0066ff);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 600;
+    box-shadow: 0 6px 12px rgba(10,102,194,0.12);
+}
+.btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(16,42,67,0.08);
+    color: #102a43;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+/* FOOTER */
+.site-footer {
+    background: linear-gradient(180deg, #0b2545 0%, #07203a 100%);
+    color: rgba(255,255,255,0.9);
+    padding: 48px 0;
+}
+.site-footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
+.site-footer a:hover { color: #bfe3ff; text-decoration: underline; }
+.footer-brand { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #fff; }
+.footer-columns { display:flex; gap: 36px; flex-wrap:wrap; }
+.footer-col { min-width: 160px; }
+.social-icons { display:flex; gap:12px; margin-top:8px; }
+.social-icons a { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; background: rgba(255,255,255,0.06); }
+
+/* Small helpers */
+.muted { color: rgba(255,255,255,0.7); }
+.container-narrow { max-width:1100px; margin:0 auto; padding:0 16px; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+    .navbar-brand img { height: 34px; }
+    .footer-columns { flex-direction: column; }
+}

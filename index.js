@@ -12,7 +12,7 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
-app.set(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
@@ -27,7 +27,7 @@ async function main(){
 }
 
 app.get('/',(req,res)=>{
-    res.send('Hello World');
+    res.render('./redirects/Home.ejs');
 });
 
 
