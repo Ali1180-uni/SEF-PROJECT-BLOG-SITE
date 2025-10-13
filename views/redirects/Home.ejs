@@ -1,2 +1,11 @@
 <% layout('/includes/boilerplate') %>
-<h1>Ali Rehmani</h1>
+<header>
+  <h1>All Blogs</h1>
+  <% for(let blogs of blog){ %>
+  <div class="Blog-Container">
+        <h1>Topic: <%= blogs.topic %></h1>
+        <h3>Title: <%= blogs.title %></h3>
+        <h4>Blog: <%= blogs.content %></h4>
+  </div>
+  <% } %>
+</header>

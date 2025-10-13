@@ -3,9 +3,10 @@ const ejsMate = require('ejs-mate');
 const path = require('path');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const Blog = require('./models/blog');
+const User = require('./models/user');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const blog = require('./models/blog');
 const app = express();
 const port = 3000;
 
@@ -23,12 +24,25 @@ main().then(()=>{
 });
 
 async function main(){
-    await mongoose.connect('mongodb://localhost:27017/blog');
+    await mongoose.connect('mongodb://localhost:27017/blogify');
+}
+
+function asyncWrap(fn) {
+    return function(req,res,next) {
+        fn(req,res,next).catch((err)=>{
+           next(err); 
+        });
+    }    
 }
 
 app.get('/',(req,res)=>{
-    res.render('./redirects/Home.ejs');
+    res.redirect('/home');
 });
+
+app.get('/home', asyncWrap(async(req,res)=>{
+    const blog = await Blog.find();
+    res.render('./redirects/Home.ejs', {blog});
+}));
 
 
 app.listen(port, () => {
