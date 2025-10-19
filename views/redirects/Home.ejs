@@ -1,19 +1,28 @@
 <% layout('/includes/boilerplate') %>
+<div id="top"></div>
 <header>
-  <h1>All Blogs</h1>
+  <h1 class="page-title">Welcome to Blogify</h1>
+  <p class="page-subtitle">Discover amazing stories and share your thoughts</p>
   <a href="/blogs/new"><button class="newButton"><i class="fa-solid fa-book"></i> Create New Blog</button></a>
-  <% for(let blogs of blog){ %>
-  <div class="Blog-Container">
-    <h1 class="topic">Topic: <%= blogs.topic %></h1>
-    <h3 class="title">Title: <%= blogs.title %></h3>
-    <h4 class="content">Blog: <%= blogs.content %></h4>
-    <br>
-    <p class="timestamp">
-      Time:
-      <%= new Date(blogs.createdAt).toLocaleTimeString('en-US', {hour: '2-digit',minute: '2-digit',hour12: true}) %>
-    </p>
-
-    <p class="date">Date: <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %></p>
+  
+  <div id="blogs" class="blogs-section">
+    <h2 class="section-heading">All Blogs</h2>
+    <% for(let blogs of blog){ %>
+    <div class="Blog-Container">
+      <h1 class="topic"><i class="fas fa-tag"></i> <%= blogs.topic %></h1>
+      <h3 class="title"><%= blogs.title %></h3>
+      <h4 class="content"><%= blogs.content %></h4>
+      <div class="blog-meta">
+        <span class="timestamp">
+          <i class="far fa-clock"></i>
+          <%= new Date(blogs.createdAt).toLocaleTimeString('en-US', {hour: '2-digit',minute: '2-digit',hour12: true}) %>
+        </span>
+        <span class="date">
+          <i class="far fa-calendar"></i>
+          <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %>
+        </span>
+      </div>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 </header>
