@@ -60,6 +60,32 @@ app.get('/blogs/about', (req,res)=>{
     res.render('./redirects/About.ejs');
 });
 
+app.get('/blogs/:id/edit', asyncWrap(async(req,res)=>{
+    const {id} = req.params;
+    const blog = await Blog.findById(id).populate('author');
+    res.render('./redirects/editBlog.ejs', {blog});
+}));
+
+// Authentication required for the following routes
+app.post('/blogs', asyncWrap(async(req,res)=>{
+    const {topic, title, content} = req.body;
+    await Blog.insertOne({topic: topic , title: title, content: content, createdAt: new Date(), updatedAt: new Date()});
+    res.redirect('/blogs'); 
+}));
+
+app.put('/blogs/:id', asyncWrap(async(req,res)=>{
+    const {id} = req.params;
+    const {topic, title, content} = req.body;
+    await Blog.findByIdAndUpdate(id, {topic, title, content});
+    res.redirect('/blogs');
+}));
+
+app.delete('/blogs/:id', asyncWrap(async(req,res)=>{
+    const {id} = req.params;
+    await Blog.findByIdAndDelete(id);
+    res.redirect('/blogs');
+}));
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

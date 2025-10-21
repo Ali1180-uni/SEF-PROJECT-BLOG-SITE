@@ -1,0 +1,26 @@
+<% layout('/includes/boilerplate') %>
+<header>
+    <h1><i class="fas fa-edit"></i> Edit BLOG</h1>    
+    <h1>Created by <%= blog.author.name %></h1>    
+    <form action="/blogs/<%= blog.id %>?_method=PUT" class="needs-validation" method="POST" novalidate style="width:100%; max-width:760px;">
+        <div class="mb-3">
+            <label for="topic" class="form-label">Topic</label>
+            <input type="text" class="form-control" id="topic" name="topic" value="<%= blog.topic %>" required>
+            <div class="invalid-feedback">Please enter a topic.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="<%= blog.title %>" required>
+            <div class="invalid-feedback">Please enter a title.</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="10" required><%= blog.content %></textarea>
+            <div class="invalid-feedback">Please enter blog content.</div>
+        </div>
+
+        <button type="submit" class="btn btn-cta">Update</button>
+    </form>
+</header>
