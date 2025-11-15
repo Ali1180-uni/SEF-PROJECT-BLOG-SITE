@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const ejsMate = require('ejs-mate');
 const path = require('path');
@@ -37,24 +36,25 @@ store.on('error', function (e) {
 
 const SessionOptions = {
     store,
-    secret: process.env.SECRET,
+    secret: "AliRahmaniSecret",
     resave: false,
-    saveUninitialized: true,  // Changed to true for proper session handling
+    saveUninitialized: true,  // FIXED 🔥
     cookie: {
-        // 7 days
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
     }
 };
+
 
 app.use(session(SessionOptions));
 app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new passportLocal(User.authenticate()));
 
+// Configure passport-local-mongoose strategy
+passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -195,12 +195,10 @@ app.post('/blogs/signup', asyncWrap(async (req, res, next) => {
 }));
 
 // Login route
-app.post('/blogs/login', origUrl, passport.authenticate('local', { failureRedirect: '/blogs/login', failureFlash: true }), async (req, res, next) => {
+app.post('/blogs/login', origUrl, passport.authenticate('local', { failureRedirect: '/blogs/login', failureFlash: true }), async (req, res) => {
     console.log('Login successful! User:', req.user.email);
     req.flash('success', `Welcome back, ${req.user.name}!`);
-    const redirectUrl = res.locals.redirectUrl || '/blogs';
-    console.log('Redirecting to:', redirectUrl);
-    res.redirect(redirectUrl);
+    res.redirect(res.locals.redirectUrl || '/blogs');
 });
 
 // 404 handler for all undefined routes (must be after all other routes)

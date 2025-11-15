@@ -40,6 +40,7 @@ async function seedDatabase() {
         email: userData.email 
       });
       const registered = await User.register(user, userData.password);
+      console.log(`   DEBUG: Has hash: ${!!registered.hash}, Has salt: ${!!registered.salt}`);
       createdUsers.push(registered);
       console.log(`   ✓ ${userData.name} created`);
     }
