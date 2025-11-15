@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom site-font-body">
   <div class="container-fluid container-narrow">
     <a class="navbar-brand" href="/">
-  <img src="/Image/icon.png" alt="Blogify logo" width="40" height="40" style="object-fit:contain; border-radius:6px;">
+      <img src="/Image/icon.png" alt="Blogify logo" width="40" height="40" style="object-fit:contain; border-radius:6px;">
       <span class="site-font-heading">Blogify</span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,12 +26,21 @@
         </li>
       </ul>
       <div class="d-flex align-items-center gap-2">
+        <% if (!currUser) { %>
         <a class="btn btn-ghost" href="/blogs/login">
           <i class="fas fa-sign-in-alt"></i> Login
         </a>
         <a class="btn btn-cta" href="/blogs/signup">
           <i class="fas fa-user-plus"></i> Sign up
         </a>
+        <% } else if (currUser) { %>
+        <span class="navbar-text text-light me-2">
+          <i class="fas fa-user"></i> Welcome, <%= currUser.name %>!
+        </span>
+        <a class="btn btn-outline-light" href="/blogs/logout">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        <% } %>
       </div>
     </div>
   </div>

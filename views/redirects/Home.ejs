@@ -3,9 +3,18 @@
 <header>
   <h1 class="page-title">Welcome to Blogify</h1>
   <p class="page-subtitle">Discover amazing stories and share your thoughts</p>
-  <form action="/blogs/new" method="get">
-    <button class="newButton" disabled><i class="fa-solid fa-book"></i> Create New Blog</button>
-  </form>
+  <% if (currUser) { %>
+    <form action="/blogs/new" method="get">
+      <button class="newButton"><i class="fa-solid fa-book"></i> Create New Blog</button>
+    </form>
+  <% } else { %>
+    <!-- Hit the protected route so isLoggedIn stores redirectUrl=/blogs/new and flashes -->
+    <form action="/blogs/new" method="get">
+      <button class="newButton" type="submit">
+        <i class="fa-solid fa-lock"></i> Login to Create Blog
+      </button>
+    </form>
+  <% } %>
 
   <div id="blogs" class="blogs-section">
     <h2 class="section-heading">All Blogs</h2>
@@ -24,16 +33,18 @@
           <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %>
         </span>
       </div>
-      <span class="inline">
-        <form action="/blogs/<%= blogs.id %>/edit" method="get">
-          <button class="editButton"><i class="fas fa-edit"></i> Edit</button>
-        </form>
-      </span>
-      <span class="inline">
-        <form action="/blogs/<%= blogs.id %>?_method=DELETE" method="post">
-          <button class="deleteButton"><i class="fas fa-trash-alt"></i> Delete</button>
-        </form>
-      </span>
+      <% if (currUser && currUser._id.equals(blogs.author._id)) { %>
+          <span class="inline">
+            <form action="/blogs/<%= blogs.id %>/edit" method="get">
+              <button class="editButton"><i class="fas fa-edit"></i> Edit</button>
+            </form>
+          </span>
+          <span class="inline">
+            <form action="/blogs/<%= blogs.id %>?_method=DELETE" method="post">
+              <button class="deleteButton"><i class="fas fa-trash-alt"></i> Delete</button>
+            </form>
+          </span>
+      <% } %>
     </div>
     <% } %>
   </div>
