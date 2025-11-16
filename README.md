@@ -11,7 +11,7 @@ A full-stack blog application built with Node.js, Express, MongoDB, and EJS. Fea
 
 - **Course**: Software Engineering Fundamentals (SEF)
 - **Semester**: 3rd Semester
-- **Authors**: Ali Rahman & Group
+- **Authors**: M.Ali, Talha Raza, Assamul-Haq & Abubakar
 - **Institution**: NTU
 
 ---
@@ -76,8 +76,6 @@ A full-stack blog application built with Node.js, Express, MongoDB, and EJS. Fea
 
 ### Additional Tools
 - **method-override** - HTTP verb support (PUT, DELETE)
-- **dotenv** (17.2.3) - Environment variable management
-- **bcrypt** (6.0.0) - Password hashing
 - **nodemon** - Development auto-restart
 
 ---
@@ -383,7 +381,7 @@ The application will be available at: **http://localhost:3000**
 ## 📊 Database Seeding
 
 The `models/init.js` script seeds the database with:
-- **3 Users**: Ali Rahman, Sara Khan, Admin User
+- **3 Users**: Ali Rahmani, Sara Khan, Assamul-Haq
 - **4 Blogs**: Sample blog posts with various topics
 - **Relationships**: Blogs linked to authors, likes array populated
 
@@ -455,8 +453,8 @@ This project is licensed under the ISC License.
 
 ## 👥 Authors
 
-- **Ali Rahman** - Lead Developer
-- **Group Members** - Contributors
+- **Ali Rahmani** - Lead Developer
+- **Talha, Assamul-Haq, Abubakar** - Contributors
 
 **Institution**: National Textile University (NTU)  
 **Course**: Software Engineering Fundamentals  
@@ -553,7 +551,7 @@ Bootstrap-styled alerts for success and error messages throughout the applicatio
 
 ---
 
-**Built with ❤️ by Ali Rahman and Team for SEF Course Project**
+**Built with ❤️ by Ali Rahmani, Talha, Assamul-Haq & Abubakar for SEF Course Project**
 
 ---
 
