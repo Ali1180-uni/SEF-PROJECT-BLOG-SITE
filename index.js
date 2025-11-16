@@ -27,7 +27,7 @@ const mongoUrl = 'mongodb://localhost:27017/blogify';
 
 const store = MongoStore.create({
     mongoUrl,
-    touchAfter: 24 * 3600 // lazy session update - update session once per 24 hours
+    touchAfter: 24 * 3600 // time period in seconds
 });
 
 store.on('error', function (e) {
@@ -38,7 +38,7 @@ const SessionOptions = {
     store,
     secret: "AliRahmaniSecret",
     resave: false,
-    saveUninitialized: true,  // FIXED 🔥
+    saveUninitialized: true,
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7,
