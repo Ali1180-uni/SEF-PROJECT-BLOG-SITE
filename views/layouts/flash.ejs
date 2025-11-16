@@ -1,68 +1,13 @@
-<div class="flash-container">
-  <% if (locals.error && locals.error.length) { %>
-    <% locals.error.forEach(function(msg){ %>
-      <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-        <i class="fas fa-exclamation-circle me-2"></i>
-        <strong>Error!</strong> <%= msg %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <% }) %>
-  <% } %>
+<% if(success && success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+    <%= success %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
 
-  <% if (locals.success && locals.success.length) { %>
-    <% locals.success.forEach(function(msg){ %>
-      <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-        <i class="fas fa-check-circle me-2"></i>
-        <strong>Success!</strong> <%= msg %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <% }) %>
-  <% } %>
-</div>
-
-<style>
-  .flash-container {
-    position: sticky;
-    top: 0;
-    z-index: 1050;
-    margin: 0;
-    padding: 1rem 1rem 0 1rem;
-  }
-  
-  .flash-container .alert {
-    margin-bottom: 1rem;
-    animation: slideDown 0.3s ease-out;
-    border-left: 4px solid;
-  }
-  
-  .alert-danger {
-    border-left-color: #dc3545;
-  }
-  
-  .alert-success {
-    border-left-color: #28a745;
-  }
-  
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Auto-dismiss after 5 seconds */
-  .flash-container .alert {
-    animation: slideDown 0.3s ease-out, fadeOut 0.5s ease-in 4.5s forwards;
-  }
-  
-  @keyframes fadeOut {
-    to {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-  }
-</style>
+<% if(error && error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
+    <%= error %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>

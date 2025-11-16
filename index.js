@@ -202,6 +202,12 @@ app.post('/blogs/login', origUrl, passport.authenticate('local', { failureRedire
 });
 
 // 404 handler for all undefined routes (must be after all other routes)
+app.all('/blogs/:any', (req, res, next) => {
+    const err = new Error(`Cannot find ${req.originalUrl} on this server!`);
+    err.status = 404;
+    next(err);
+});
+// 404 handler for all undefined routes (must be after all other routes)
 app.all('/:any', (req, res, next) => {
     const err = new Error(`Cannot find ${req.originalUrl} on this server!`);
     err.status = 404;
