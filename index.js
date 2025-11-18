@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const ejsMate = require('ejs-mate');
 const path = require('path');
@@ -12,7 +13,7 @@ const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const { isLoggedIn, isAuthor, origUrl } = require('./Middlewares/isAuth');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.engine('ejs', ejsMate);
@@ -23,7 +24,8 @@ app.use(methodOverride('_method'));
 
 
 
-const mongoUrl = 'mongodb://localhost:27017/blogify';
+const mongoUrl = process.env.MONGODB_URL;
+// const mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/blogify';
 
 const store = MongoStore.create({
     mongoUrl,
@@ -36,7 +38,8 @@ store.on('error', function (e) {
 
 const SessionOptions = {
     store,
-    secret: "AliRahmaniSecret",
+    secret: process.env.SECRET,
+    // secret: process.env.SECRET || "AliRahmaniSecret",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -74,7 +77,8 @@ main().then(() => {
 });
 
 async function main() {
-    await mongoose.connect('mongodb://localhost:27017/blogify');
+    await mongoose.connect(process.env.MONGODB_URL);
+    // await mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/blogify');
 }
 
 function asyncWrap(fn) {
@@ -137,6 +141,7 @@ app.get('/blogs/:id/edit', isLoggedIn, isAuthor, asyncWrap(async (req, res) => {
     if (!blog) {
         req.flash('error', 'Blog not found');
         return res.redirect('/blogs');
+        
     }
     res.render('./redirects/editBlog.ejs', { blog });
 }));

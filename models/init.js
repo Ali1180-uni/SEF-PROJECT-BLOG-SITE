@@ -23,7 +23,7 @@ const usersData = [
 
 async function seedDatabase() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/blogify");
+    await mongoose.connect('mongodb+srv://ali-1180:rx321e10@cluster0.icr4x0r.mongodb.net/');
     console.log("✅ Database connected");
 
     console.log("🔄 Clearing existing data...");
