@@ -38,6 +38,10 @@
           <i class="far fa-calendar"></i>
           <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %>
         </span>
+        <span class="likes">
+          <i class="fas fa-heart" style="color: #e74c3c;"></i>
+          <%= blogs.likes.length %> <%= blogs.likes.length === 1 ? 'Like' : 'Likes' %>
+        </span>
       </div>
       <div style="margin: 15px 0;">
         <a href="/blogs/<%= blogs.id %>" class="btn btn-primary" style="text-decoration: none;">
