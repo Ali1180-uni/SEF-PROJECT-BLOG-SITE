@@ -21,8 +21,14 @@
     <% for(let blogs of blog){ %>
     <div class="Blog-Container">
       <h1 class="topic"><i class="fas fa-tag"></i> <%= blogs.topic %></h1>
-      <h3 class="title"><%= blogs.title %></h3>
-      <h4 class="content"><%= blogs.content %></h4>
+      <a href="/blogs/<%= blogs.id %>" style="text-decoration: none; color: inherit;">
+        <h3 class="title" style="cursor: pointer; transition: color 0.3s;" 
+            onmouseover="this.style.color='#007bff'" 
+            onmouseout="this.style.color='inherit'">
+          <%= blogs.title %>
+        </h3>
+      </a>
+      <div class="content"><%- blogs.content.substring(0, 200) %>...</div>
       <div class="blog-meta">
         <span class="timestamp">
           <i class="far fa-clock"></i>
@@ -32,6 +38,11 @@
           <i class="far fa-calendar"></i>
           <%= blogs.createdAt.toString().split(" ").slice(0, 4).join("-") %>
         </span>
+      </div>
+      <div style="margin: 15px 0;">
+        <a href="/blogs/<%= blogs.id %>" class="btn btn-primary" style="text-decoration: none;">
+          <i class="fas fa-book-open"></i> Read More
+        </a>
       </div>
       <% if (currUser && currUser._id.equals(blogs.author._id)) { %>
           <span class="inline">

@@ -1,0 +1,121 @@
+<% layout('/includes/boilerplate') %>
+
+<header>
+  <div class="view-blog-container" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+    <!-- Blog Header -->
+    <div class="blog-header" style="margin-bottom: 30px;">
+      <div class="topic-badge" style="display: inline-block; background: var(--primary-color, #007bff); color: white; padding: 6px 16px; border-radius: 20px; font-size: 14px; margin-bottom: 15px;">
+        <i class="fas fa-tag"></i> <%= blog.topic %>
+      </div>
+      
+      <h1 class="blog-title" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; color: #2c3e50;">
+        <%= blog.title %>
+      </h1>
+      
+      <!-- Author & Date Info -->
+      <div class="blog-metadata" style="display: flex; align-items: center; gap: 20px; padding: 15px 0; border-bottom: 2px solid #eee; margin-bottom: 30px; flex-wrap: wrap;">
+        <div class="author-info" style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-user-circle" style="font-size: 24px; color: #666;"></i>
+          <span style="font-weight: 600; color: #333;">By <%= blog.author.name %></span>
+        </div>
+        
+        <div class="date-info" style="display: flex; align-items: center; gap: 8px; color: #666;">
+          <i class="far fa-calendar"></i>
+          <span><%= blog.createdAt.toString().split(" ").slice(0, 4).join(" ") %></span>
+        </div>
+        
+        <div class="time-info" style="display: flex; align-items: center; gap: 8px; color: #666;">
+          <i class="far fa-clock"></i>
+          <span><%= new Date(blog.createdAt).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true}) %></span>
+        </div>
+        
+        <div class="likes-info" style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
+          <i class="fas fa-heart" style="color: #e74c3c;"></i>
+          <span style="font-weight: 600;"><%= blog.likes.length %> <%= blog.likes.length === 1 ? 'Like' : 'Likes' %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Content -->
+    <div class="blog-content" style="font-size: 1.1rem; line-height: 1.8; color: #444; margin-bottom: 40px;">
+      <%- blog.content %>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="blog-actions" style="display: flex; gap: 15px; padding: 20px 0; border-top: 2px solid #eee; flex-wrap: wrap;">
+      <a href="/blogs" class="btn btn-secondary" style="text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Back to All Blogs
+      </a>
+      
+      <% if (currUser && currUser._id.equals(blog.author._id)) { %>
+        <a href="/blogs/<%= blog.id %>/edit" class="btn btn-primary" style="text-decoration: none;">
+          <i class="fas fa-edit"></i> Edit Blog
+        </a>
+        
+        <form action="/blogs/<%= blog.id %>?_method=DELETE" method="post" style="margin: 0;" onsubmit="return confirm('Are you sure you want to delete this blog?');">
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> Delete Blog
+          </button>
+        </form>
+      <% } %>
+      
+      <% if (currUser && !currUser._id.equals(blog.author._id)) { %>
+        <% const hasLiked = blog.likes.some(like => like.equals(currUser._id)); %>
+        <form action="/blogs/<%= blog.id %>/like?_method=PUT" method="post" style="margin: 0;">
+          <button type="submit" class="btn <%= hasLiked ? 'btn-danger' : 'btn-outline-danger' %>">
+            <i class="fas fa-heart"></i> <%= hasLiked ? 'Unlike' : 'Like' %>
+          </button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Quill.js CSS for proper content rendering -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  
+  <style>
+    /* Style for Quill content */
+    .blog-content .ql-editor {
+      padding: 0;
+      font-size: inherit;
+      line-height: inherit;
+    }
+    
+    .blog-content h1, .blog-content h2, .blog-content h3 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+    
+    .blog-content p {
+      margin-bottom: 1em;
+    }
+    
+    .blog-content ul, .blog-content ol {
+      padding-left: 2em;
+      margin-bottom: 1em;
+    }
+    
+    .blog-content blockquote {
+      border-left: 4px solid #ccc;
+      padding-left: 1em;
+      margin: 1em 0;
+      font-style: italic;
+      color: #666;
+    }
+    
+    .blog-content code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .blog-content pre {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</header>

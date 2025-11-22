@@ -16,12 +16,44 @@
 
     <div class="mb-3">
       <label for="content" class="form-label">Content</label>
-      <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+      <div id="editor" style="height: 300px; background: white;"></div>
+      <textarea class="form-control" id="content" name="content" style="display:none;" required></textarea>
       <div class="invalid-feedback">Please enter blog content.</div>
     </div>
 
     <button type="submit" class="btn btn-cta">Submit</button>
   </form>
 
+  <!-- Quill.js CSS -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  
+  <!-- Quill.js JS -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  
+  <script>
+    // Initialize Quill editor
+    var quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: 'Write your blog content here...',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'color': [] }, { 'background': [] }],
+          ['link', 'blockquote', 'code-block'],
+          ['clean']
+        ]
+      }
+    });
+
+    // Sync Quill content to hidden textarea on form submit
+    document.querySelector('form').onsubmit = function() {
+      var content = document.querySelector('#content');
+      content.value = quill.root.innerHTML;
+      return true;
+    };
+  </script>
+  
   <script src="/JS/form-validation.js"></script>
 </header>

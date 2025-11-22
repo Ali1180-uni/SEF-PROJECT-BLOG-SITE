@@ -123,7 +123,7 @@ app.get('/blogs/logout', (req, res, next) => {
     });
 });
 
-// View individual blog (optional feature - for future use)
+// View individual blog
 app.get('/blogs/:id', asyncWrap(async (req, res) => {
     const { id } = req.params;
     const blog = await Blog.findById(id).populate('author');
@@ -131,8 +131,7 @@ app.get('/blogs/:id', asyncWrap(async (req, res) => {
         req.flash('error', 'Blog not found');
         return res.redirect('/blogs');
     }
-    // For now redirect to home, or you can create a single blog view
-    res.redirect('/blogs');
+    res.render('./redirects/viewBlog.ejs', { blog });
 }));
 
 app.get('/blogs/:id/edit', isLoggedIn, isAuthor, asyncWrap(async (req, res) => {
@@ -168,6 +167,33 @@ app.delete('/blogs/:id', isLoggedIn, isAuthor, asyncWrap(async (req, res) => {
     await Blog.findByIdAndDelete(id);
     req.flash('success', 'Blog deleted');
     res.redirect('/blogs');
+}));
+
+// Like/Unlike blog
+app.put('/blogs/:id/like', isLoggedIn, asyncWrap(async (req, res) => {
+    const { id } = req.params;
+    const blog = await Blog.findById(id);
+    
+    if (!blog) {
+        req.flash('error', 'Blog not found');
+        return res.redirect('/blogs');
+    }
+    
+    // Check if user already liked the blog
+    const likeIndex = blog.likes.indexOf(req.user._id);
+    
+    if (likeIndex === -1) {
+        // User hasn't liked it yet, add like
+        blog.likes.push(req.user._id);
+        req.flash('success', 'Blog liked!');
+    } else {
+        // User already liked it, remove like
+        blog.likes.splice(likeIndex, 1);
+        req.flash('success', 'Blog unliked!');
+    }
+    
+    await blog.save();
+    res.redirect(`/blogs/${id}`);
 }));
 
 // Signup route

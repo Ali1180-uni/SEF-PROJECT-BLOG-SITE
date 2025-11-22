@@ -6,12 +6,8 @@
   "author": "Ali & Group",
   "type": "commonjs",
   "main": "index.js",
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "start": "node index.js",
-    "build": "echo 'No build step required'",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
