@@ -27,12 +27,16 @@ A full-stack blog application built with Node.js, Express, MongoDB, and EJS. Fea
 - ✅ **Authorization** - Users can only edit/delete their own blogs
 
 ### Blog Management
-- ✅ **Create Blogs** - Write and publish blog posts with title, topic, and content
+- ✅ **Create Blogs** - Write and publish blog posts with rich text editor
+- ✅ **Rich Text Editor** - Quill.js WYSIWYG editor with formatting controls (bold, italic, underline, lists, colors, links)
 - ✅ **View All Blogs** - Browse all published blogs on the homepage
-- ✅ **Edit Blogs** - Update your own blog posts
+- ✅ **Individual Blog View** - Click to view full blog post with all details
+- ✅ **Edit Blogs** - Update your own blog posts with rich text editor
 - ✅ **Delete Blogs** - Remove your own blog posts
 - ✅ **Author Attribution** - Each blog shows author information
 - ✅ **Timestamps** - Display creation date and time for each blog
+- ✅ **Like System** - Like and unlike blogs from other users
+- ✅ **Like Counter** - Shows number of likes on each blog
 
 ### User Experience
 - ✅ **Responsive Design** - Mobile-first, works on all devices
@@ -73,6 +77,7 @@ A full-stack blog application built with Node.js, Express, MongoDB, and EJS. Fea
 - **Bootstrap** (5.3.7) - CSS framework
 - **Font Awesome** (6.4.2) - Icon library
 - **Google Fonts** - Playfair Display & Inter fonts
+- **Quill.js** (1.3.6) - Rich text WYSIWYG editor
 
 ### Additional Tools
 - **method-override** - HTTP verb support (PUT, DELETE)
@@ -110,10 +115,11 @@ MODEL PROJECT (BLOG SITE)/
 │   │   └── flash.ejs           # Flash message component
 │   └── redirects/
 │       ├── Home.ejs            # Homepage with blog list
+│       ├── viewBlog.ejs        # Individual blog view page
 │       ├── Login.ejs           # Login page
 │       ├── signUp.ejs          # Registration page
-│       ├── newBlog.ejs         # Create blog page
-│       ├── editBlog.ejs        # Edit blog page
+│       ├── newBlog.ejs         # Create blog page with rich text editor
+│       ├── editBlog.ejs        # Edit blog page with rich text editor
 │       ├── About.ejs           # About page
 │       └── error.ejs           # Custom error page
 │
@@ -170,8 +176,13 @@ node models/init.js
 
 **Test Accounts Created:**
 - **User 1**: ali@example.com / password123
-- **User 2**: sara@example.com / password123
-- **Admin**: admin@blogify.com / admin123
+- **User 2**: assam@example.com / password123
+- **User 3**: talha@example.com / password123
+
+**Sample Data:**
+- **12 Blogs** - 4 each on Technology, Education, and Business topics
+- **100+ words per blog** - Professional content with rich formatting
+- **Authors**: Blogs distributed among Ali, Assam, and Talha
 
 ### Step 6: Start the Application
 ```bash
@@ -258,8 +269,10 @@ The application will be available at: **http://localhost:3000**
 |--------|-------|-------------|---------------|
 | GET | `/blogs/new` | Create blog form | Logged in |
 | POST | `/blogs` | Create new blog | Logged in |
+| GET | `/blogs/:id` | View single blog | Public |
 | GET | `/blogs/:id/edit` | Edit blog form | Blog owner |
 | PUT | `/blogs/:id` | Update blog | Blog owner |
+| PUT | `/blogs/:id/like` | Like/unlike blog | Logged in (not owner) |
 | DELETE | `/blogs/:id` | Delete blog | Blog owner |
 | GET | `/blogs/logout` | Logout user | Logged in |
 
@@ -290,10 +303,20 @@ The application will be available at: **http://localhost:3000**
 
 ### Blog Cards
 - **Topic Badge**: Displays blog category
-- **Title & Content**: Blog post details
-- **Metadata**: Shows creation date and time
+- **Clickable Title**: Links to individual blog view
+- **Content Preview**: Shows first 200 characters with ellipsis
+- **Metadata**: Shows creation date, time, and like count
 - **Author Info**: References blog author
+- **Read More Button**: Navigate to full blog view
 - **Action Buttons**: Edit/delete buttons (only visible to owner)
+- **Like Counter**: Red heart icon with like count
+
+### Individual Blog View
+- **Full Content**: Complete blog post with rich text formatting
+- **Author Details**: Name and profile icon
+- **Engagement**: Like/unlike button (for logged-in users)
+- **Quick Actions**: Edit, delete (for owners), back to all blogs
+- **Metadata Bar**: Date, time, and total likes displayed prominently
 
 ---
 
@@ -381,14 +404,20 @@ The application will be available at: **http://localhost:3000**
 ## 📊 Database Seeding
 
 The `models/init.js` script seeds the database with:
-- **3 Users**: Ali Rahmani, Sara Khan, Assamul-Haq
-- **4 Blogs**: Sample blog posts with various topics
-- **Relationships**: Blogs linked to authors, likes array populated
+- **3 Users**: Ali, Assam, Talha
+- **12 Blogs**: 
+  - 4 Technology blogs (AI, Cybersecurity, Quantum Computing, 5G)
+  - 4 Education blogs (Online Learning, Critical Thinking, STEM, Teachers)
+  - 4 Business blogs (Entrepreneurship, Sustainability, Leadership, Remote Work)
+- **Rich Content**: Each blog contains ~100 words of professional content
+- **Relationships**: Blogs linked to authors, likes array with sample likes
 
 **Run seeder:**
 ```bash
 node models/init.js
 ```
+
+**Note**: Seeder connects to MongoDB Atlas by default. Update the connection string in `init.js` to use local MongoDB if needed.
 
 ---
 
@@ -416,13 +445,16 @@ node models/init.js
 
 ## 📝 Future Enhancements
 
+### Completed Features
+- [x] Like/unlike blogs
+- [x] Rich text editor for blog content (Quill.js)
+- [x] Individual blog view page
+
 ### Planned Features
-- [ ] Blog categories and tags
+- [ ] Blog categories and tags filtering
 - [ ] Search functionality
-- [ ] Like/unlike blogs
 - [ ] User profiles with avatar
 - [ ] Comment system
-- [ ] Rich text editor for blog content
 - [ ] Image upload for blogs
 - [ ] Pagination for blog list
 - [ ] Social media sharing
@@ -430,6 +462,8 @@ node models/init.js
 - [ ] Password reset functionality
 - [ ] Admin dashboard
 - [ ] Blog analytics
+- [ ] Bookmarking/saving blogs
+- [ ] Dark mode toggle
 
 ---
 
@@ -514,13 +548,16 @@ Bootstrap-styled alerts for success and error messages throughout the applicatio
 - [x] User can logout successfully
 
 #### Blog Operations
-- [x] Logged-in user can create blog
+- [x] Logged-in user can create blog with rich text editor
 - [x] Guest user redirected to login when creating blog
-- [x] User can view all blogs
-- [x] User can edit their own blogs
+- [x] User can view all blogs with previews
+- [x] User can view individual blog in detail
+- [x] User can edit their own blogs with formatting preserved
 - [x] User cannot edit other users' blogs
 - [x] User can delete their own blogs
 - [x] User cannot delete other users' blogs
+- [x] User can like/unlike other users' blogs
+- [x] Like count updates in real-time
 
 #### UI/UX
 - [x] Navbar shows correct state based on authentication
@@ -555,4 +592,4 @@ Bootstrap-styled alerts for success and error messages throughout the applicatio
 
 ---
 
-*Last Updated: November 16, 2025*
+*Last Updated: November 22, 2025*
